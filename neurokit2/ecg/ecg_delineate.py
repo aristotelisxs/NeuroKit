@@ -345,7 +345,10 @@ def _dwt_delineate_tp_onsets_offsets(
             onsets.append(np.nan)
             continue
         candidate_onsets = np.where(dwt_local[: onset_slope_peaks[-1]] < epsilon_onset)[0]
-        onsets.append(candidate_onsets[-1] + srch_idx_start)
+        if len(candidate_onsets) > 0:
+            onsets.append(candidate_onsets[-1] + srch_idx_start)
+        else:
+            onsets.append(np.nan)
 
         # # only for debugging
         # events_plot([candidate_onsets, onset_slope_peaks], dwt_local)
@@ -369,7 +372,10 @@ def _dwt_delineate_tp_onsets_offsets(
             offsets.append(np.nan)
             continue
         candidate_offsets = np.where(-dwt_local[offset_slope_peaks[0] :] < epsilon_offset)[0] + offset_slope_peaks[0]
-        offsets.append(candidate_offsets[0] + srch_idx_start)
+        if len(candidate_offsets) > 0:
+            offsets.append(candidate_offsets[0] + srch_idx_start)
+        else:
+            offsets.append(np.nan)
 
         # # only for debugging
         # events_plot([candidate_offsets, offset_slope_peaks], dwt_local)
@@ -399,7 +405,10 @@ def _dwt_delineate_qrs_bounds(rpeaks, dwtmatr, ppeaks, tpeaks, sampling_rate=250
             onsets.append(np.nan)
             continue
         candidate_onsets = np.where(-dwt_local[: onset_slope_peaks[-1]] < epsilon_onset)[0]
-        onsets.append(candidate_onsets[-1] + srch_idx_start)
+        if len(candidate_onsets) > 0:
+            onsets.append(candidate_onsets[-1] + srch_idx_start)
+        else:
+            onsets.append(np.nan)
 
         # # only for debugging
         # events_plot(candidate_onsets, -dwt_local)
@@ -425,7 +434,10 @@ def _dwt_delineate_qrs_bounds(rpeaks, dwtmatr, ppeaks, tpeaks, sampling_rate=250
             offsets.append(np.nan)
             continue
         candidate_offsets = np.where(dwt_local[onset_slope_peaks[0] :] < epsilon_offset)[0] + onset_slope_peaks[0]
-        offsets.append(candidate_offsets[0] + srch_idx_start)
+        if len(candidate_offsets) > 0:
+            offsets.append(candidate_offsets[0] + srch_idx_start)
+        else:
+            offsets.append(np.nan)
 
         # # only for debugging
         # events_plot(candidate_offsets, dwt_local)
